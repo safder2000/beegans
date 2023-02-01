@@ -1,22 +1,33 @@
-import 'package:beegains_mech_test/login_page.dart';
+import 'package:beegains_mech_test/application/login/login_bloc.dart';
+import 'package:beegains_mech_test/application/sales/sales_bloc.dart';
+import 'package:beegains_mech_test/presentation/home_page.dart';
+import 'package:beegains_mech_test/presentation/login_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-void main() {
-  runApp(const MyApp());
-}
+import 'package:shared_preferences/shared_preferences.dart';
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  var isLogin = prefs.getBool('login');
 
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+  runApp(
+    MaterialApp(
+      home: MultiBlocProvider(
+        providers: [
+          BlocProvider<LoginBloc>(
+            create: (BuildContext context) => LoginBloc(),
+          ),
+          BlocProvider<SalesBloc>(
+            create: (BuildContext context) => SalesBloc(),
+          ),
+        ],
+        child: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          home: isLogin != true ? LoginPage() : HomePage(),
+        ),
       ),
-      home: LoginPage(),
-    );
-  }
+    ),
+  );
 }

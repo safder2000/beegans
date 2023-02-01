@@ -1,5 +1,8 @@
-import 'package:beegains_mech_test/home_page.dart';
+import 'package:beegains_mech_test/application/login/login_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'home_page.dart';
 
 class LoginPage extends StatelessWidget {
   LoginPage({super.key});
@@ -34,6 +37,7 @@ class LoginPage extends StatelessWidget {
               controller: passwordController,
             ),
             Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 TextButton(
                   child: const Text(
@@ -41,14 +45,13 @@ class LoginPage extends StatelessWidget {
                     style: TextStyle(fontSize: 20),
                   ),
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => const HomePage()),
-                    );
+                    BlocProvider.of<LoginBloc>(context).add(Login(
+                        name: '${nameController.text}',
+                        pass: '${passwordController.text}',
+                        context: context));
                   },
                 )
               ],
-              mainAxisAlignment: MainAxisAlignment.center,
             ),
           ],
         ),
