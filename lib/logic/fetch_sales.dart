@@ -15,19 +15,20 @@ fetchSales(
   var user_id = prefs.getString('id');
   var token = prefs.getString('id');
   String url =
-      'http://134.209.157.220:1000/AreaBranchMapper/GetByBranchSectionAndReportTime/';
+      'http://134.209.157.220:1000/image/listByBranchSectionAndReportTime/';
+  String auth = 'bearer';
   var payload = {
-    "Report_Time_Type": 1,
-    "Branch_Id": "$Branch_Id",
-    "Section_Id": "$Section_Id",
-    "user_id": "$user_id"
+    "branchId": "5dbd727d46c214298f85e2a8",
+    "sectionId": "5dc1097546c214298f85e2ae",
+    "reportTimeType": "1",
+    "areaId": "5dc11c4046c214298f85e2d0"
   };
   // log(tocken.toString());
   var dio = Dio();
 
   try {
     // dio.options.headers['content-Type'] = 'application/json';
-    // dio.options.headers["authorization"] = token;
+    dio.options.headers["authorization"] = auth;
     var response = await dio.post(url, data: payload);
     final responseAsList = SalesRequest.fromJson(response.data);
     log(response.toString());
