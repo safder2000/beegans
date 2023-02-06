@@ -16,7 +16,9 @@ fetchSales(
   var token = prefs.getString('id');
   String url =
       'http://134.209.157.220:1000/image/listByBranchSectionAndReportTime/';
-  String auth = 'bearer';
+  var auth = {
+    "Authorization": "$token",
+  };
   var payload = {
     "branchId": "5dbd727d46c214298f85e2a8",
     "sectionId": "5dc1097546c214298f85e2ae",
